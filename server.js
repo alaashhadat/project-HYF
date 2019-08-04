@@ -1,13 +1,20 @@
 const express = require('express');
+const cors = require('cors');
 const connectDB = require('./config/db');
 const app = express();
+
 // connect database
+connectDB();
 
 const PORT = process.env.PORT || 5000;
-connectDB();
+
 app.get('/', (req, res) => {
   res.send('API running ');
 });
+//init middleware
+app.use(express.json({ extended: false }));
+app.use(cors());
+
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
